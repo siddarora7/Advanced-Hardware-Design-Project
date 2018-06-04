@@ -1,0 +1,291 @@
+// Initialization
+sub r0, r0, r0 //r0 = 0
+addi r0, r0, 16 // r0 = 16 (b = 16)
+sub r1, r1, r1 //r1 = 0
+addi r1, r1, 4 //r1 = 4 (u = 4)
+sub r2, r2, r2 //r2 = 0
+addi r2, r2, 4 //r2 = 4 (c = 4)
+
+//L initialization
+sub r31, r31, r31 //r31 = 0
+sub r3, r3, r3 //r3 = 0
+lw r3, r31, 0 // r3 = Mem[0] = U3 = ukey(127 downto 96)
+sw r3, r31, 7 // Mem[7] = L[3] = r3 = ukey(127 downto 96)
+lw r3, r31, 1 //r3 = Mem[1] = U2 = ukey(95 downto 64)
+sw r3, r31, 6 // Mem[6] = L[2] = r3 = ukey(95 downto 64)
+lw r3, r31, 2 // r3 = Mem[2] = U1 = ukey(63 downto 32)
+sw r3, r31, 5 //Mem[5] = L[1] = r3 = ukey( 63 downto 32)
+lw r3, r31, 3 // r3 = Mem[3] = U0 = ukey(31 downto 0)
+sw r3, r31, 4 // Mem[4] = L[0] = r3 = ukey(31 downto 0)
+
+//S initialization
+sub r3, r3, r3 // r3 = 0
+addi r3, r3, 25 // r3 = 25 (t = 26)
+lw r4, r31, 8 // r4 = Mem[8] = Pw
+sw r4, r31, 10 // Mem[10] = S[0] = r4 = Pw
+lw r4, r31, 9 // r4 = Mem[9] = Qw
+sub r5, r5, r5 // r5 = 0 (i = 0)
+
+LOOP:lw r6, r5, 10 // r6 = Mem[10+r5] = S[r5] = (S[i-1] = r6)
+add r6, r4, r6 // r6 = r6 + r4 = S[r5] + Qw ( S[i-1] + Qw)
+addi r5, r5, 1 // r5 += 1 (i += 1)
+sw r6, r5, 10 // Mem[10+r5] = S[r5] = S[i] = r6 (S[i] = S[i-1] + Qw)
+bne r5, r3, -5 // PC = 22
+
+// Key generation
+sub r5, r5, r5 // r5 = 0 (i = 0)
+sub r6, r6, r6 // r6 = 0 (j = 0)
+sub r7, r7, r7 // r7 = 0 (A = 0)
+sub r8, r8, r8 // r8 = 0 (b = 0)
+sub r30, r30, r30 // r30 = 0 (k = 0)
+sub r29, r29, r29 // r29 = 0
+addi r29, r29, 78 // r29 = 78
+sub r28, r28, r28 // r28 = 0
+addi r28, r28, 26 // r28 = 26
+
+LOOP:lw r9, r5, 10 // r9 = Mem[10+r5] = S[i]
+add r10, r7, r8 // r10 = r7 + r8 (A+B)
+add r7, r10, r9 // r7 = r9 + r10 (A = S[i] + A + B)
+shr r9, r7, 29 // r9 = 0…0xxx of A
+shl r7, r7, 3 // r7 = x…x000 of A
+add r7, r9, r7 // r7 = r7 + r9 (A = (S[i]+A+B)<<<3)
+sw r7, r5, 10 // Mem[10+r5] = r7 (S[i] = (S[i]+A+B)<<<3)
+lw r9, r6, 4 // r9 = Mem[4+r6] = L[j]
+add r10, r7, r8 // r10 = r7 + r8 = A+B (S[i]+A+B+B)
+add r8, r10, r9 // r8 = r9 + r10 (B = L[j] + A + B)
+shl r10, r10, 27 // (A+B)<<27
+shr r10, r10, 27 // (A+B)>>27 ((A+B)(4 downto 0))
+sub r31, r31, r31 // r31 = 0
+beq r31, r10, // if (A+B = 0), jmp
+addi r31, r31, 1 // r31 = 1
+beq r31, r10, 71 // if(A+B = 1), jump
+addi r31, r31, 1 // r31 = 2
+beq r31, r10, 72 // if(A+B = 2), jump
+addi r31, r31, 1 // r31 = 3
+beq r31, r10, 73 // if(A+B = 3), jump
+addi r31, r31, 1 // r31 = 4
+beq r31, r10, 74 // if(A+B = 4), jump
+addi r31, r31, 1 // r31 = 5
+beq r31, r10, 75 // if(A+B = 5), jump
+addi r31, r31, 1 // r31 = 6
+beq r31, r10, 76 // if(A+B = 6), jump
+addi r31, r31, 1 // r31 = 7
+beq r31, r10, 77 // if(A+B = 7), jump
+addi r31, r31, 1 // r31 = 8
+beq r31, r10, 78 // if(A+B = 8), jump
+addi r31, r31, 1 // r31 = 9
+beq r31, r10, 79 // if(A+B = 9), jump
+addi r31, r31, 1 // r31 = 10
+beq r31, r10, 80 // if(A+B = 10), jump
+addi r31, r31, 1 // r31 = 11
+beq r31, r10, 81 // if(A+B = 11), jump
+addi r31, r31, 1 // r31 = 12
+beq r31, r10, 82 // if(A+B = 12), jump
+addi r31, r31, 1 // r31 = 13
+beq r31, r10, 83 // if(A+B = 13), jump
+addi r31, r31, 1 // r31 = 14
+beq r31, r10, 84 // if(A+B = 14), jump
+addi r31, r31, 1 // r31 = 15
+beq r31, r10, 85 // if(A+B = 15), jump
+addi r31, r31, 1 // r31 = 16
+beq r31, r10, 86 // if(A+B = 16), jump
+addi r31, r31, 1 // r31 = 17
+beq r31, r10, 87 // if(A+B = 17), jump
+addi r31, r31, 1 // r31 = 18
+beq r31, r10, 88 // if(A+B = 18), jump
+addi r31, r31, 1 // r31 = 19
+beq r31, r10, 89 // if(A+B = 19), jump
+addi r31, r31, 1 // r31 = 20
+beq r31, r10, 90 // if(A+B = 20), jump
+addi r31, r31, 1 // r31 = 21
+beq r31, r10, 91 // if(A+B = 11), jump
+addi r31, r31, 1 // r31 = 22
+beq r31, r10, 92 // if(A+B = 22), jump
+addi r31, r31, 1 // r31 = 23
+beq r31, r10, 93 // if(A+B = 23), jump
+addi r31, r31, 1 // r31 = 24
+beq r31, r10, 94 // if(A+B = 24), jump
+addi r31, r31, 1 // r31 = 25
+beq r31, r10, 95 // if(A+B = 25), jump
+addi r31, r31, 1 // r31 = 26
+beq r31, r10, 96 // if(A+B = 26), jump
+addi r31, r31, 1 // r31 = 27
+beq r31, r10, 97 // if(A+B = 27), jump
+addi r31, r31, 1 // r31 = 28
+beq r31, r10, 98 // if(A+B = 28), jump
+addi r31, r31, 1 // r31 = 29
+beq r31, r10, 99 // if(A+B = 29), jump
+addi r31, r31, 1 // r31 = 30
+beq r31, r10, 100 // if(A+B = 30), jump
+addi r31, r31, 1 // r31 = 31
+beq r31, r10, 101 // if(A+B = 31), jump
+add r8, r9, r8 // B = L[j]+A+B <<< (A+B)
+sw r8, r6, 4 // Mem[4+r6] = L[j] = r8 = (L[i]+A+B)<<<(A+B)
+addi r5, r5, 1 // r5 += 1 (i += 1)
+beq r5, r28, // if(i = 26), jump
+addi r6, r6, 1 // r6 = j+1 = x…x
+shl r6, r6, 30 // r6 = j+1 = xx0…0
+shr r6, r6, 30 // r6 = j+1 = 0…0xx (%c = 4)
+addi r30, r30, 1 // r30 +=1 (k +=1)
+bne r30, r29, -85 // LOOP back
+hal // Stop
+
+// Rotations
+// <<< 1
+shr r9, r8, 31 // r9 = 0…0x of L[j] + A + B
+shl r8, r8, 1 // r8 = x…x0 of L[j]+A+B
+beq r8, r8, -14 // jump back to program
+
+// <<< 2
+shr r9, r8, 30
+shl r8, r8, 2
+beq r8, r8, -17
+
+// <<< 3
+shr r9, r8, 29
+shl r8, r8, 3
+beq r8, r8, -20
+
+// <<< 4
+shr r9, r8, 28
+shl r8, r8, 4
+beq r8, r8, -23
+
+// <<< 5
+shr r9, r8, 27
+shl r8, r8, 5
+beq r8, r8, -26
+
+// <<< 6
+shr r9, r8, 26
+shl r8, r8, 6
+beq r8, r8, -29
+
+// <<< 7
+shr r9, r8, 25
+shl r8, r8, 7
+beq r8, r8, -32
+
+// <<< 8
+shr r9, r8, 24
+shl r8, r8, 8
+beq r8, r8, -35
+
+// <<< 9
+shr r9, r8, 23
+shl r8, r8, 9
+beq r8, r8, -38
+
+// <<< 10
+shr r9, r8, 22
+shl r8, r8, 10
+beq r8, r8, -41
+
+// <<< 11
+shr r9, r8, 21
+shl r8, r8, 11
+beq r8, r8, -44
+
+// <<< 12
+shr r9, r8, 20
+shl r8, r8, 12
+beq r8, r8, -47
+
+// <<< 13
+shr r9, r8, 19
+shl r8, r8, 13
+beq r8, r8, -50
+
+// <<< 14
+shr r9, r8, 18
+shl r8, r8, 14
+beq r8, r8, -53
+
+// <<< 15
+shr r9, r8, 17
+shl r8, r8, 15
+beq r8, r8, -56
+
+// <<< 16
+shr r9, r8, 16
+shl r8, r8, 16
+beq r8, r8, -59
+
+// <<< 17
+shr r9, r8, 15
+shl r8, r8, 17
+beq r8, r8, -62
+
+// <<< 18
+shr r9, r8, 14
+shl r8, r8, 18
+beq r8, r8, -65
+
+// <<< 19
+shr r9, r8, 13
+shl r8, r8, 19
+beq r8, r8, -68
+
+// <<< 20
+shr r9, r8, 12
+shl r8, r8, 20
+beq r8, r8, -71
+
+// <<< 21
+shr r9, r8, 11
+shl r8, r8, 21
+beq r8, r8, -74
+
+// <<< 22
+shr r9, r8, 10
+shl r8, r8, 22
+beq r8, r8, -77
+
+// <<< 23
+shr r9, r8, 9
+shl r8, r8, 23
+beq r8, r8, -80
+
+// <<< 24
+shr r9, r8, 8
+shl r8, r8, 24
+beq r8, r8, -83
+
+// <<< 25
+shr r9, r8, 7
+shl r8, r8, 25
+beq r8, r8, -86
+
+// <<< 26
+shr r9, r8, 6
+shl r8, r8, 26
+beq r8, r8, -89
+
+// <<< 27
+shr r9, r8, 5
+shl r8, r8, 27
+beq r8, r8, -92
+
+// <<< 28
+shr r9, r8, 4
+shl r8, r8, 28
+beq r8, r8, -95
+
+// <<< 29
+shr r9, r8, 3
+shl r8, r8, 29
+beq r8, r8, -98
+
+// <<< 30
+shr r9, r8, 2
+shl r8, r8, 30
+beq r8, r8, -101
+
+// <<< 31
+shr r9, r8, 1
+shl r8, r8, 31
+beq r8, r8, -104
+
+// i = 0
+sub r5, r5, r5 // r5 = 0
+beq r5, r5, // jump back to program

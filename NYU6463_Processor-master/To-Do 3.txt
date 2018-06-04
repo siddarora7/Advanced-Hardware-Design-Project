@@ -1,0 +1,7 @@
+Karl: Block diagram
+
+Kevin+Roberts: Description of how we run the RC5 + interface (input/output)
+
+Anusha: Performance (max speed, min period) and area analysis (resource utilization)
+
+Siddhartha + Dmitriy: Smaple 1, sample 2 and rc5 screenshots(enc, dec, key gen and all together (when we do the code for this one we’ll let you know)) — For the moment you can do the one for key gen only. To start the processor, force a clock clk_100 and btnc to 1 for 4 clock cycles at the same time force sw to 4000. After the 4 clock cycles force btnc to 0 and run for around 1000ns. After that, to show that it’s working you can force sw to 410A to show the first element of the skey and sw to 4123 to show the last one. The values should be the same as the ones given for the labs. You can also show an intermediate value by changing the last 2 bits of sw. There is an offset of 10 in the memory, that is why the first element is 10(A) not 0.

@@ -1,0 +1,365 @@
+// Initializations
+sub r0, r0, r0 // r0 = 0
+sub r31, r31, r31 // r31 = 0
+lw r0, r31, 36 // r0 = Mem[r31+36] = Mem[36] => r0 = A
+sub r1, r1, r1 // r1 = 0
+lw r1, r31, 37 // r1 = Mem[r31+37] = Mem[37] => r1 = B
+
+// Decryption
+sub r29, r29, r29 // r29 = 0
+addi r29, r29, 1 // r29 = 1
+sub r2, r2, r2 // r2 = 0 ( i = 0)
+addi r2, r2, 13 // r2 = 13
+LOOP:subi r2, r2, 1 // r2 = 12 (i = 12)
+
+// B
+add r30, r2, r2 // r30 = r2 + r2 (2*i)
+addi r30, r30, 1 // 2i+1
+lw r3, r30, 10 // r3 = S[2i+1]
+sub r1, r3, r1 // B = B - S[2i+1]
+shl r3, r0, 27 // r3 = r0 << 27
+shr r3, r3, 27 // r3 = r0 >> 27 (r3 = A(4 downto 0))
+sub r31, r31, r31 // r31 = 0
+beq r3, r31, // if ( A = 0)
+addi r31, r31, 1 // r31 = 1
+beq r3, r31, 145 // if(A = 1)
+addi r31, r31, 1
+beq r3, r31, 146
+addi r31, r31, 1
+beq r3, r31, 147
+addi r31, r31, 1
+beq r3, r31, 148
+addi r31, r31, 1
+beq r3, r31, 149
+addi r31, r31, 1
+beq r3, r31, 150
+addi r31, r31, 1
+beq r3, r31, 151
+addi r31, r31, 1
+beq r3, r31, 152
+addi r31, r31, 1
+beq r3, r31, 153
+addi r31, r31, 1
+beq r3, r31, 154
+addi r31, r31, 1
+beq r3, r31, 155
+addi r31, r31, 1
+beq r3, r31, 156
+addi r31, r31, 1
+beq r3, r31, 157
+addi r31, r31, 1
+beq r3, r31, 158
+addi r31, r31, 1
+beq r3, r31, 159
+addi r31, r31, 1
+beq r3, r31, 160
+addi r31, r31, 1
+beq r3, r31, 161
+addi r31, r31, 1
+beq r3, r31, 162
+addi r31, r31, 1
+beq r3, r31, 163
+addi r31, r31, 1
+beq r3, r31, 164
+addi r31, r31, 1
+beq r3, r31, 165
+addi r31, r31, 1
+beq r3, r31, 166
+addi r31, r31, 1
+beq r3, r31, 167
+addi r31, r31, 1
+beq r3, r31, 168
+addi r31, r31, 1
+beq r3, r31, 169
+addi r31, r31, 1
+beq r3, r31, 170
+addi r31, r31, 1
+beq r3, r31, 171
+addi r31, r31, 1
+beq r3, r31, 172
+addi r31, r31, 1
+beq r3, r31, 173
+addi r31, r31, 1
+beq r3, r31, 174
+addi r31, r31, 1
+beq r3, r31, 175
+add r1, r4, r1 // r1 = r4 + r1 (B = (B-S[2*i+1]) >>> A)
+and r3, r0, r1 // ( A & B)
+nor r4, r0, r1 // (!(A | B))
+nor r1, r3, 24 // B = ((B-S[2*i+1])>>>A) xor A
+
+// A
+add r30, r2, r2 // r30 = r2 + r2 (2*i)
+lw r3, r30, 10 // r3 = S[2i]
+sub r0, r3, r0 // r0 = r0 - r3 (A = A - S[2*i])
+
+shl r3, r1, 27 // r3 = r1 << 27
+shr r3, r3, 27 // r3 = r3 >> 27 (r3 = B(4 downto 0))
+sub r31, r31, r31 // r31 = 0
+addi r31, r31, 1 // r31 = 1
+beq r3, r31, 166 // if(B = 1)
+addi r31, r31, 1
+beq r3, r31, 167
+addi r31, r31, 1
+beq r3, r31, 168
+addi r31, r31, 1
+beq r3, r31, 169
+addi r31, r31, 1
+beq r3, r31, 170
+addi r31, r31, 1
+beq r3, r31, 171
+addi r31, r31, 1
+beq r3, r31, 172
+addi r31, r31, 1
+beq r3, r31, 173
+addi r31, r31, 1
+beq r3, r31, 174
+addi r31, r31, 1
+beq r3, r31, 175
+addi r31, r31, 1
+beq r3, r31, 176
+addi r31, r31, 1
+beq r3, r31, 177
+addi r31, r31, 1
+beq r3, r31, 178
+addi r31, r31, 1
+beq r3, r31, 179
+addi r31, r31, 1
+beq r3, r31, 180
+addi r31, r31, 1
+beq r3, r31, 181
+addi r31, r31, 1
+beq r3, r31, 182
+addi r31, r31, 1
+beq r3, r31, 183
+addi r31, r31, 1
+beq r3, r31, 184
+addi r31, r31, 1
+beq r3, r31, 185
+addi r31, r31, 1
+beq r3, r31, 186
+addi r31, r31, 1
+beq r3, r31, 187
+addi r31, r31, 1
+beq r3, r31, 188
+addi r31, r31, 1
+beq r3, r31, 189
+addi r31, r31, 1
+beq r3, r31, 190
+addi r31, r31, 1
+beq r3, r31, 191
+addi r31, r31, 1
+beq r3, r31, 192
+addi r31, r31, 1
+beq r3, r31, 193
+addi r31, r31, 1
+beq r3, r31, 194
+addi r31, r31, 1
+beq r3, r31, 195
+addi r31, r31, 1
+beq r3, r31, 196
+add r0, r4, r0 // r0 = r4+r0 (A = (A - S[2*i]) >>> B)
+and r3, r0, r1 // r3 = r0 & r1 (A & B)
+nor r4, r0, r1 // r4 = !(r0 | r1) (!(A | B))
+nor r0, r3, r4 // r0 = !(r3 | r4) (A = (A - S[2*i]) >>> B) xor B)
+
+bne r2, r29, -149 // LOOP back
+sub r31, r31, r31 // r31 = 0
+lw r2, r31, 11 // r2 = Mem[r31+11] = Mem[11] => r2 = S[1]
+sub r1, r2, r1 // r1 = r1 - r2 (B = B - S[1])
+lw r2, r31, 10 // r2 = Mem[r31+11] = Mem[10] => r2 = S[0]
+sub r0, r2, r0 // r0 = r0 - r2 (A = A - S[0])
+sw r1, r31, 39 // B' = B
+sw r0, r31, 38 // A' = A
+hal
+
+// Rotations
+// >>> A
+shl r4, r1, 31
+shr r1, r1, 1
+beq r1, r1, -88
+shl r4, r1, 30
+shr r1, r1, 2
+beq r1, r1, -91
+shl r4, r1, 29
+shr r1, r1, 3
+beq r1, r1, -94
+shl r4, r1, 28
+shr r1, r1, 4
+beq r1, r1, -97
+shl r4, r1, 27
+shr r1, r1, 5
+beq r1, r1, -100
+shl r4, r1, 26
+shr r1, r1, 6
+beq r1, r1, -103
+shl r4, r1, 25
+shr r1, r1, 7
+beq r1, r1, -106
+shl r4, r1, 24
+shr r1, r1, 8
+beq r1, r1, -109
+shl r4, r1, 23
+shr r1, r1, 9
+beq r1, r1, -112
+shl r4, r1, 22
+shr r1, r1, 10
+beq r1, r1, -115
+shl r4, r1, 21
+shr r1, r1, 11
+beq r1, r1, -118
+shl r4, r1, 20
+shr r1, r1, 12
+beq r1, r1, -121
+shl r4, r1, 19
+shr r1, r1, 13
+beq r1, r1, -124
+shl r4, r1, 18
+shr r1, r1, 14
+beq r1, r1, -127
+shl r4, r1, 17
+shr r1, r1, 15
+beq r1, r1, -130
+shl r4, r1, 16
+shr r1, r1, 16
+beq r1, r1, -133
+shl r4, r1, 15
+shr r1, r1, 17
+beq r1, r1, -136
+shl r4, r1, 14
+shr r1, r1, 18
+beq r1, r1, -139
+shl r4, r1, 13
+shr r1, r1, 19
+beq r1, r1, -142
+shl r4, r1, 12
+shr r1, r1, 20
+beq r1, r1, -145
+shl r4, r1, 11
+shr r1, r1, 21
+beq r1, r1, -148
+shl r4, r1, 10
+shr r1, r1, 22
+beq r1, r1, -151
+shl r4, r1, 9
+shr r1, r1, 23
+beq r1, r1, -154
+shl r4, r1, 8
+shr r1, r1, 24
+beq r1, r1, -157
+shl r4, r1, 7
+shr r1, r1, 25
+beq r1, r1, -160
+shl r4, r1, 6
+shr r1, r1, 26
+beq r1, r1, -163
+shl r4, r1, 5
+shr r1, r1, 27
+beq r1, r1, -166
+shl r4, r1, 4
+shr r1, r1, 28
+beq r1, r1, -169
+shl r4, r1, 3
+shr r1, r1, 29
+beq r1, r1, -172
+shl r4, r1, 2
+shr r1, r1, 30
+beq r1, r1, -175
+shl r4, r1, 1
+shr r1, r1, 31
+beq r1, r1, -178
+
+// >>> B
+shl r4, r0, 31
+shr r0, r0, 1
+beq r0, r0, -109
+shl r4, r0, 30
+shr r0, r0, 2
+beq r0, r0, -112
+shl r4, r0, 29
+shr r0, r0, 3
+beq r0, r0, -115
+shl r4, r0, 28
+shr r0, r0, 4
+beq r0, r0, -118
+shl r4, r0, 27
+shr r0, r0, 5
+beq r0, r0, -121
+shl r4, r0, 26
+shr r0, r0, 6
+beq r0, r0, -124
+shl r4, r0, 25
+shr r0, r0, 7
+beq r0, r0, -127
+shl r4, r0, 24
+shr r0, r0, 8
+beq r0, r0, -130
+shl r4, r0, 23
+shr r0, r0, 9
+beq r0, r0, -133
+shl r4, r0, 22
+shr r0, r0, 10
+beq r0, r0, -136
+shl r4, r0, 21
+shr r0, r0, 11
+beq r0, r0, -139
+shl r4, r0, 20
+shr r0, r0, 12
+beq r0, r0, -142
+shl r4, r0, 19
+shr r0, r0, 13
+beq r0, r0, -145
+shl r4, r0, 18
+shr r0, r0, 14
+beq r0, r0, -148
+shl r4, r0, 17
+shr r0, r0, 15
+beq r0, r0, -151
+shl r4, r0, 16
+shr r0, r0, 16
+beq r0, r0, -154
+shl r4, r0, 15
+shr r0, r0, 17
+beq r0, r0, -157
+shl r4, r0, 14
+shr r0, r0, 18
+beq r0, r0, -160
+shl r4, r0, 13
+shr r0, r0, 19
+beq r0, r0, -163
+shl r4, r0, 12
+shr r0, r0, 20
+beq r0, r0, -166
+shl r4, r0, 11
+shr r0, r0, 21
+beq r0, r0, -169
+shl r4, r0, 10
+shr r0, r0, 22
+beq r0, r0, -172
+shl r4, r0, 9
+shr r0, r0, 23
+beq r0, r0, -175
+shl r4, r0, 8
+shr r0, r0, 24
+beq r0, r0, -178
+shl r4, r0, 7
+shr r0, r0, 25
+beq r0, r0, -181
+shl r4, r0, 6
+shr r0, r0, 26
+beq r0, r0, -184
+shl r4, r0, 5
+shr r0, r0, 27
+beq r0, r0, -187
+shl r4, r0, 4
+shr r0, r0, 28
+beq r0, r0, -190
+shl r4, r0, 3
+shr r0, r0, 29
+beq r0, r0, -193
+shl r4, r0, 2
+shr r0, r0, 30
+beq r0, r0, -196
+shl r4, r0, 1
+shr r0, r0, 31
+beq r0, r0, -199

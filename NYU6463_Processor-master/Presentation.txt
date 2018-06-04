@@ -1,0 +1,4 @@
+- Show high level block diagram; like the one on github. — Done
+- Show data memory array to show where we store what information - Done
+- Interface — Done
+- Steps to get it working - Done

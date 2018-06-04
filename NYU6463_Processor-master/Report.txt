@@ -1,0 +1,31 @@
+I: Processor + Implementation  - Done
+- Interfaces
+
+II: BD and FSM  - Done
+- Block diagram
+- FSM
+
+III: Components of processor - Done
+- ALU screenshots (func + timing)
+- Decoder screenshots (func + timing)
+
+IV: Design verification  - Done
+- Sample 1 and 2 screenshots (func + timing)
+- All the previous screenshots too
+
+V:Performance and area analysis  - Anusha
+- Performance and area analysis
+
+VI: RC5 using our processor - Done
+- High level description of how we run rc5
+- Memory locations
+- Complete rc5 screenshots (func + timing) - Sid and Dmitriy
+- Number of cycles it takes to complete rc5 (can be given by sid and dimtriy) - Sid and Dmitriy
+
+VII: Test benches - Done
+
+VIII: Links - Done
+- Video link
+- github repo link
+
+IX: codes - Done
